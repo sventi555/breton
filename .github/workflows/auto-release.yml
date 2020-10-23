@@ -39,7 +39,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        repository: sventi555/corner/corner
+        repository: sventi555/breton/breton
         tag_with_ref: true
 
   # update_cluster:
