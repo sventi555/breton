@@ -1,0 +1,142 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/proxy-body-size: 250M
+  name: breton
+  namespace: breton
+spec:
+  rules:
+  - host: bretonlikethecrackers.com
+    http:
+      paths:
+      - backend:
+          serviceName: breton
+          servicePort: 80
+  tls:
+  - hosts:
+    - bretonlikethecrackers.com
+    secretName: breton-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: breton
+  namespace: breton
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: breton
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: breton
+  namespace: breton
+  labels:
+    app: breton
+spec:
+  selector:
+    matchLabels:
+      app: breton
+  serviceName: breton  
+  template:
+    metadata:
+      labels:
+        app: breton
+    spec:
+      initContainers:
+      - name: collect-and-migrate
+        image: docker.pkg.github.com/sventi555/breton/breton:0.0.1-alpha
+        command: ['./collect-and-migrate.sh']
+        env:
+        - name: DEBUG
+          value: false
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: breton-credentials
+              key: secret-key
+        - name: PG_USER
+          value: postgres
+        - name: PG_PASS
+          valueFrom:
+            secretKeyRef:
+              name: breton-credentials
+              key: pg-pass
+        - name: PG_HOST
+          value: postgres
+        - name: STATIC_URL
+          value: https://cdn.bretonlikethecrackers.com/static
+        - name: MEDIA_URL
+          value: https://cdn.bretonlikethecrackers.com/media
+        volumeMounts:
+        - name: breton-media
+          mountPath: /code/media
+        - name: breton-static
+          mountPath: /code/static
+      imagePullSecrets:
+      
+      - name: github-pkg-reg-creds
+      containers:
+      - name: breton
+        image: docker.pkg.github.com/sventi555/breton/breton:0.0.1-alpha
+        env:
+        - name: DEBUG
+          value: false
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: breton-credentials
+              key: secret-key
+        - name: PG_USER
+          value: postgres
+        - name: PG_PASS
+          valueFrom:
+            secretKeyRef:
+              name: breton-credentials
+              key: pg-pass
+        - name: PG_HOST
+          value: postgres
+        - name: STATIC_URL
+          value: https://cdn.bretonlikethecrackers.com/static
+        - name: MEDIA_URL
+          value: https://cdn.bretonlikethecrackers.com/media
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            memory: 500Mi
+            cpu: 400m
+          requests:
+            memory: 500Mi
+            cpu: 200m  
+        volumeMounts:
+        - name: breton-media
+          mountPath: /code/media
+        - name: breton-static
+          mountPath: /code/static
+      imagePullSecrets:
+      - name: github-pkg-reg-creds
+  volumeClaimTemplates:
+  - metadata:
+      name: breton-media
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: do-block-storage
+      resources:
+        requests:
+          storage: 2Gi
+  - metadata:
+      name: breton-static
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: do-block-storage
+      resources:
+        requests:
+          storage: 2Gi

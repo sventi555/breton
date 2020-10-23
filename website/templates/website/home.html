@@ -1,0 +1,22 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'website/styles/home.css' %}">
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div id='wrapper'>
+    <div id='cracker-box' class='mx-auto'>
+        <img id='cracker' class='cracker' src="{% static 'website/images/cracker.png' %}"/>
+        <img id='cracker-bite' class='cracker hidden' src="{% static 'website/images/cracker-bite.png' %}"/>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'website/scripts/home.js' %}"></script>
+{% endblock %}

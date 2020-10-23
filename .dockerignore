@@ -1,0 +1,11 @@
+.git/
+.gitignore
+
+.env
+static/
+media/
+
+manifests/
+
+Dockerfile
+.dockerignore

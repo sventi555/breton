@@ -1,0 +1,10 @@
+#wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#photo {
+    width: 30vw;
+    min-width: 300px;
+}

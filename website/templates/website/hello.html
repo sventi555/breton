@@ -1,0 +1,22 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'website/styles/hello.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id='wrapper' class='p-3'>
+    <img id='photo' class='m-3' src="{{ data.photo }}"/>
+    <div id='bio' class='m-3'>
+        <h1>Bio</h1>
+        <p>{{ data.blurb }}</p>
+    </div>
+    <ul id='links' class='m-3'>
+    {% for link in links %}
+        <li>{{ link.title }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

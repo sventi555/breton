@@ -1,0 +1,74 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/proxy-body-size: 250M
+  name: file-server
+  namespace: breton
+spec:
+  rules:
+  - host: cdn.bretonlikethecrackers.com
+    http:
+      paths:
+      - backend:
+          serviceName: file-server
+          servicePort: 80
+  tls:
+  - hosts:
+    - cdn.bretonlikethecrackers.com
+    secretName: file-server-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-server
+  namespace: breton
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: file-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-server
+  namespace: breton
+  labels:
+    app: breton
+spec:
+  selector:
+    matchLabels:
+      app: file-server
+  serviceName: file-server  
+  template:
+    metadata:
+      labels:
+        app: file-server
+    spec:
+      containers:
+      - name: file-server
+        image: nginx:1.19.3    
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: 100Mi
+            cpu: 400m
+          requests:
+            memory: 100Mi
+            cpu: 200m  
+        volumeMounts:
+        - name: breton-media
+          mountPath: /usr/share/nginx/html/media
+        - name: breton-static
+          mountPath: /usr/share/nginx/html/static
+      imagePullSecrets:
+      - name: github-pkg-reg-creds
+  volumes:
+  - name: breton-media
+    persistentVolumeClaim: breton-media
+  - name: breton-static
+    persistentVolumeClaim: breton-static
