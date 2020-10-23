@@ -54,7 +54,7 @@ spec:
         command: ['./collect-and-migrate.sh']
         env:
         - name: DEBUG
-          value: false
+          value: 'false'
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
@@ -86,7 +86,7 @@ spec:
         image: docker.pkg.github.com/sventi555/breton/breton:0.0.1-alpha
         env:
         - name: DEBUG
-          value: false
+          value: 'false'
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
@@ -107,13 +107,6 @@ spec:
           value: https://cdn.bretonlikethecrackers.com/media
         ports:
         - containerPort: 3000
-        resources:
-          limits:
-            memory: 500Mi
-            cpu: 400m
-          requests:
-            memory: 500Mi
-            cpu: 200m  
         volumeMounts:
         - name: breton-media
           mountPath: /code/media

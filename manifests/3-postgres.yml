@@ -36,18 +36,13 @@ spec:
             secretKeyRef:
               name: breton-credentials
               key: pg-pass
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
         ports:
         - containerPort: 5432
-        resources:
-          limits:
-            memory: 500Mi
-            cpu: 400m
-          requests:
-            memory: 500Mi
-            cpu: 200m
         volumeMounts:
         - name: postgres-data
-          mountPath: /data
+          mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
   - metadata:
       name: postgres-data

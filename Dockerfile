@@ -11,4 +11,6 @@ RUN pipenv install --deploy
 
 COPY . .
 
+RUN chmod +x /code/collect-and-migrate.sh
+
 CMD ["pipenv", "run", "python", "manage.py", "runserver"]
