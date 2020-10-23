@@ -27,7 +27,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 8000
   selector:
     app: breton
 ---
@@ -51,7 +51,7 @@ spec:
       initContainers:
       - name: collect-and-migrate
         image: docker.pkg.github.com/sventi555/breton/breton:0.0.2-alpha
-        command: ['./collect-and-migrate.sh']
+        command: ['/bin/bash', '-c', '/code/collect-and-migrate.sh']
         env:
         - name: DEBUG
           value: 'false'
@@ -70,9 +70,9 @@ spec:
         - name: PG_HOST
           value: postgres
         - name: STATIC_URL
-          value: https://cdn.bretonlikethecrackers.com/static
+          value: https://cdn.bretonlikethecrackers.com/static/
         - name: MEDIA_URL
-          value: https://cdn.bretonlikethecrackers.com/media
+          value: https://cdn.bretonlikethecrackers.com/media/
         volumeMounts:
         - name: breton-media
           mountPath: /code/media
@@ -102,11 +102,11 @@ spec:
         - name: PG_HOST
           value: postgres
         - name: STATIC_URL
-          value: https://cdn.bretonlikethecrackers.com/static
+          value: https://cdn.bretonlikethecrackers.com/static/
         - name: MEDIA_URL
-          value: https://cdn.bretonlikethecrackers.com/media
+          value: https://cdn.bretonlikethecrackers.com/media/
         ports:
-        - containerPort: 3000
+        - containerPort: 8000
         volumeMounts:
         - name: breton-media
           mountPath: /code/media

@@ -33,6 +33,16 @@ jobs:
     - name: Check out the repo
       uses: actions/checkout@v2
 
+    - name: Setup Python 3.9
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+
+    - name: Install dependencies
+        run: |
+          python -m pip install -U pipenv
+          python -m pipenv lock -r > requirements.txt
+
     - name: Push to GitHub Packages
       uses: docker/build-push-action@v1
       with:
@@ -42,26 +52,26 @@ jobs:
         repository: sventi555/breton/breton
         tag_with_ref: true
 
-  # update_cluster:
-  #   name: Update image version on StatefulSet and wait for completion
-  #   if: github.event_name == 'release'
-  #   needs: [push_to_registry]
-  #   runs-on: ubuntu-latest
+  update_cluster:
+    name: Update image version on StatefulSet and wait for completion
+    if: github.event_name == 'release'
+    needs: [push_to_registry]
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - name: Save DigitalOcean Kubernetes Config
-  #     uses: matootie/dokube@v1.3.1
-  #     with:
-  #       personalAccessToken: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-  #       clusterName: sventis-cluster
-  #       namespace: corner
+    steps:
+    - name: Save DigitalOcean Kubernetes Config
+      uses: matootie/dokube@v1.3.1
+      with:
+        personalAccessToken: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        clusterName: sventis-cluster
+        namespace: breton
 
-  #   - name: Get version
-  #     id: gv
-  #     run: echo "::set-output name=version::${GITHUB_REF##*/}"
+    - name: Get version
+      id: gv
+      run: echo "::set-output name=version::${GITHUB_REF##*/}"
 
-  #   - name: Update StatefulSet
-  #     run: kubectl set image statefulset.apps/corner corner=docker.pkg.github.com/sventi555/corner/corner:${{ steps.gv.outputs.version }}
+    - name: Update StatefulSet
+      run: kubectl set image statefulset.apps/breton breton=docker.pkg.github.com/sventi555/breton/breton:${{ steps.gv.outputs.version }}
 
-  #   - name: Wait for StatefulSet
-  #     run: kubectl rollout status statefulset/corner -w
+    - name: Wait for StatefulSet
+      run: kubectl rollout status statefulset/breton -w

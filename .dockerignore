@@ -5,6 +5,9 @@
 static/
 media/
 
+Pipfile
+Pipfile.lock
+
 manifests/
 
 Dockerfile

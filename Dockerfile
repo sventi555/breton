@@ -2,15 +2,12 @@ from python:3.9.0
 
 WORKDIR /code
 
-RUN pip install pipenv
+COPY requirements.txt .
 
-COPY Pipfile .
-COPY Pipfile.lock .
-
-RUN pipenv install --deploy
+RUN ["pip", "install", "-r", "requirements.txt"]
 
 COPY . .
 
-RUN chmod +x /code/collect-and-migrate.sh
+EXPOSE 8000
 
-CMD ["pipenv", "run", "python", "manage.py", "runserver"]
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8000", "--log-level", "warning", "main.wsgi:application"]
