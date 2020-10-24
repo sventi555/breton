@@ -42,7 +42,6 @@ spec:
   selector:
     matchLabels:
       app: file-server
-  serviceName: file-server  
   template:
     metadata:
       labels:
@@ -53,22 +52,17 @@ spec:
         image: nginx:1.19.3    
         ports:
         - containerPort: 80
-        resources:
-          limits:
-            memory: 100Mi
-            cpu: 400m
-          requests:
-            memory: 100Mi
-            cpu: 200m  
         volumeMounts:
         - name: breton-media
           mountPath: /usr/share/nginx/html/media
         - name: breton-static
           mountPath: /usr/share/nginx/html/static
-      imagePullSecrets:
-      - name: github-pkg-reg-creds
-  volumes:
-  - name: breton-media
-    persistentVolumeClaim: breton-media
-  - name: breton-static
-    persistentVolumeClaim: breton-static
+      volumes:
+      - name: breton-media
+        persistentVolumeClaim:
+          claimName: breton-media-breton-0
+          readOnly: true
+      - name: breton-static
+        persistentVolumeClaim:
+          claimName: breton-static-breton-0
+          readOnly: true
