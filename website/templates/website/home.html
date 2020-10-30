@@ -10,12 +10,14 @@
 
 {% block content %}
 <div id='wrapper'>
-    <div id='cracker-box' class='mx-auto'>
+    <a id='cracker-box' class='mx-auto' href='#'>
         <img id='cracker' class='cracker' src="{% static 'website/images/cracker.png' %}"/>
         <img id='cracker-bite' class='cracker hidden' src="{% static 'website/images/cracker-bite.png' %}"/>
-    </div>
+    </a>
 </div>
 {% endblock %}
+
+{% block footer %}{% endblock footer %}
 
 {% block scripts %}
 <script src="{% static 'website/scripts/home.js' %}"></script>

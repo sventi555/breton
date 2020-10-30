@@ -4,14 +4,9 @@ from .models import *
 
 # Register your models here.
 
-class HelloLinkInline(admin.StackedInline):
-    model = HelloLink
-
 @admin.register(Hello)
 class HelloAdmin(admin.ModelAdmin):
-    inlines = [
-        HelloLinkInline,
-    ]
+    pass
 
 class PerformanceLinkInline(admin.StackedInline):
     model = PerformanceLink

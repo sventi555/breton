@@ -50,7 +50,7 @@ spec:
     spec:
       initContainers:
       - name: collect-and-migrate
-        image: docker.pkg.github.com/sventi555/breton/breton:0.0.2-alpha
+        image: docker.pkg.github.com/sventi555/breton/breton:0.0.3-alpha
         command: ['/bin/bash', '-c', '/code/collect-and-migrate.sh']
         env:
         - name: DEBUG
@@ -119,8 +119,8 @@ spec:
       name: breton-media
     spec:
       accessModes:
-      - ReadWriteOnce
-      storageClassName: do-block-storage
+      - ReadWriteMany
+      storageClassName: nfs
       resources:
         requests:
           storage: 2Gi
@@ -128,8 +128,8 @@ spec:
       name: breton-static
     spec:
       accessModes:
-      - ReadWriteOnce
-      storageClassName: do-block-storage
+      - ReadWriteMany
+      storageClassName: nfs
       resources:
         requests:
           storage: 2Gi

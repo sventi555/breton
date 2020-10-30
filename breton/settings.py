@@ -30,7 +30,7 @@ SECRET_KEY = getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if getenv('DEBUG') == 'false' else True
 
-ALLOWED_HOSTS = ['bretonlikethecrackers.com']
+ALLOWED_HOSTS = ['bretonlikethecrackers.com', 'localhost']
 
 
 # Application definition

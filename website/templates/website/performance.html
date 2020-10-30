@@ -3,18 +3,15 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'website/styles/writing.css' %}">
+<link rel="stylesheet" href="{% static 'website/styles/performance.css' %}">
 {% endblock %}
 
 {% block content %}
 <div id='wrapper'>
-    <div id='credits-wrapper' class='mb-5'>
-        <h1>credits</h1>
-        <p>{{ data.credits }}</p>
-    </div>
-    <div id='links-wrapper'>
+    <img id='resume' src="{{ data.resume.url }}"/>
+    <div id='links-wrapper' class='m-3'>
         <h3>links to stuff</h3>
-        <ul id='links' class='m-3'>
+        <ul id='links'>
             {% for link in links %}
                 <li class='link'>
                     <p class='link-title mb-1'>{{ link.title }}</p>

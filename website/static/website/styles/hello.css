@@ -1,10 +1,50 @@
 #wrapper {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     flex-wrap: wrap;
 }
 
-#photo {
-    width: 30vw;
-    min-width: 300px;
+#links {
+    display: flex;
+    flex-direction: row;
+    width: 150px;
+    justify-content: center;
+}
+
+.icon{
+    width: 60px;
+    height: 60px;
+    margin: 0.2em;
+    padding: 0.3em;
+    background-color: rgb(220, 220, 220);
+    border: 2px solid black;
+    border-radius: 1em;
+}
+
+@media (min-width: 576px) {
+    #photo {
+        width: 400px;
+        min-width: 400px;
+    }
+}
+
+@media (min-width: 768px) { 
+    #photo {
+        width: 600px;
+        min-width: 600px;
+    }
+}
+
+@media (min-width: 992px) {
+    #wrapper {
+        flex-wrap: nowrap;
+    }
+}
+
+@media (min-width: 1200px) {
+    #photo {
+        width: 400px;
+        min-width: 400px;
+    }
 }

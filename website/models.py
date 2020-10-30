@@ -5,11 +5,6 @@ class Hello(models.Model):
     photo = models.ImageField()
     blurb = models.TextField()
 
-class HelloLink(models.Model):
-    title = models.CharField(max_length=128)
-    link = models.URLField()
-    hello = models.ForeignKey(Hello, related_name='links', on_delete=models.CASCADE)
-
 class Performance(models.Model):
     resume = models.ImageField()
 

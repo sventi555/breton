@@ -7,16 +7,15 @@
 {% endblock %}
 
 {% block content %}
-<div id='wrapper' class='p-3'>
+<div id='wrapper'>
     <img id='photo' class='m-3' src="{{ data.photo.url }}"/>
     <div id='bio' class='m-3'>
-        <h1>Bio</h1>
+        <h1>hello</h1>
         <p>{{ data.blurb }}</p>
     </div>
-    <ul id='links' class='m-3'>
-    {% for link in links %}
-        <li>{{ link.title }}</li>
-    {% endfor %}
-    </ul>
+</div>
+<div id='links' class='mx-auto'>
+    <a href='https://www.instagram.com/bretonlikethecrackers/' target='_blank'><img id='insta' class='icon' src="{% static 'website/images/instagram.svg' %}" /></a>
+    <a href='https://www.imdb.com/name/nm6870964/' target='_blank'><img id='imdb' class='icon' src="{% static 'website/images/imdb.svg' %}" /></a>
 </div>
 {% endblock %}

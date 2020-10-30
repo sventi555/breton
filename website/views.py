@@ -12,15 +12,14 @@ def home(request):
 
 def hello(request):
     hello_data = Hello.objects.all()[0]
-    links = hello_data.links.all()
-    context = {'data': hello_data, 'links': links, 'page': 'hello'}
+    context = {'data': hello_data, 'page': 'hello'}
     return render(request, 'website/hello.html', context)
 
-def performances(request):
+def performance(request):
     performance_data = Performance.objects.all()[0]
     links = performance_data.links.all()
-    context = {'data': performance_data, 'links': links, 'page': 'performances'}
-    return render(request, 'website/performances.html', context)
+    context = {'data': performance_data, 'links': links, 'page': 'performance'}
+    return render(request, 'website/performance.html', context)
 
 def writing(request):
     writing_data = Writing.objects.all()[0]

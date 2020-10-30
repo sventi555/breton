@@ -1,3 +1,44 @@
+#wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 #resume {
-    width: 80vw;
+    /* border: 1px solid black; */
+    border-radius: 5px;
+}
+
+.link {
+    list-style-type: square;
+}
+
+.link-title {
+    font-size: 1.2em;
+}
+
+@media (min-width: 576px) {
+
+}
+
+@media (min-width: 768px) { 
+    #resume {
+        width: 650px;
+        margin: 1rem auto;
+    }
+}
+
+@media (min-width: 992px) {
+
+}
+
+@media (min-width: 1200px) {
+    #wrapper {
+        flex-wrap: nowrap;
+    }
+
+    #resume {
+        width: 650px;
+        min-width: 650px;
+        margin: 1rem;
+    }
 }
