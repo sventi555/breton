@@ -71,7 +71,7 @@ jobs:
       run: echo "::set-output name=version::${GITHUB_REF##*/}"
 
     - name: Update StatefulSet
-      run: kubectl set image statefulset.apps/breton collect-and-migrate=docker.pkg.github.com/sventi555/breton/breton:${{ steps.gv.outputs.version }} breton=docker.pkg.github.com/sventi555/breton/breton:${{ steps.gv.outputs.version }}
+      run: kubectl patch statefulset.apps/breton -p '{"spec": {"template": {"spec": {"initContainers":[{"name":"collect-and-migrate", "image":"docker.pkg.github.com/sventi555/breton/breton:${{ steps.gv.outputs.version }}"}], "containers":[{"name":"breton", "image":"docker.pkg.github.com/sventi555/breton/breton:${{ steps.gv.outputs.version }}"}]}}}}'
 
     - name: Wait for StatefulSet
       run: kubectl rollout status statefulset/breton -w

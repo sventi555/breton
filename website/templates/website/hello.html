@@ -1,6 +1,7 @@
 {% extends 'website/base.html' %}
 
 {% load static %}
+{% load website_extras %}
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'website/styles/hello.css' %}">
@@ -11,7 +12,7 @@
     <img id='photo' class='m-3' src="{{ data.photo.url }}"/>
     <div id='bio' class='m-3'>
         <h1>hello</h1>
-        <p>{{ data.blurb }}</p>
+        <p>{{ data.blurb|markdown_to_html }}</p>
     </div>
 </div>
 <div id='links' class='mx-auto'>
