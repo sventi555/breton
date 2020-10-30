@@ -50,7 +50,7 @@ spec:
     spec:
       initContainers:
       - name: collect-and-migrate
-        image: docker.pkg.github.com/sventi555/breton/breton:0.0.3-alpha
+        image: docker.pkg.github.com/sventi555/breton/breton:0.0.6-alpha
         command: ['/bin/bash', '-c', '/code/collect-and-migrate.sh']
         env:
         - name: DEBUG
@@ -83,7 +83,7 @@ spec:
       - name: github-pkg-reg-creds
       containers:
       - name: breton
-        image: docker.pkg.github.com/sventi555/breton/breton:0.0.2-alpha
+        image: docker.pkg.github.com/sventi555/breton/breton:0.0.6-alpha
         env:
         - name: DEBUG
           value: 'false'
