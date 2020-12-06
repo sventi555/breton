@@ -81,12 +81,8 @@ WSGI_APPLICATION = 'breton.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'breton',
-        'USER': getenv('PG_USER'),
-        'PASSWORD': getenv('PG_PASS'),
-        'HOST': getenv('PG_HOST'),
-        'PORT': 5432
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'breton.db'
     }
 }
 

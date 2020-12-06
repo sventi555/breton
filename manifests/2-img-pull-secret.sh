@@ -1,1 +1,0 @@
-kubectl create secret docker-registry github-pkg-reg-creds --docker-server='docker.pkg.github.com' --docker-username='sventi555' --docker-password='<INSERT_GITHUB_KEY>' --docker-email='sventi555@gmail.com' -n breton
