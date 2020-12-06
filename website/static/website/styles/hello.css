@@ -22,6 +22,10 @@
     border-radius: 1em;
 }
 
+#photo {
+    width: 80vw;
+}
+
 @media (min-width: 576px) {
     #photo {
         width: 400px;
